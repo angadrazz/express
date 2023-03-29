@@ -1,24 +1,46 @@
+const { constant } = require("../constant");
+
 const errorHandling = (err, req, res, next) => {
-        const statusCode = res.statusCode ? res.statusCode : 500;
-        switch (key) {
-                case 400:
-                        res.json({
-                                 title: "Validation Failed", 
-                                 message: err.message, 
-                                 stackTrace: err.stack
-                                });
-                        break;
-                        case 404:
-                                res.json({ 
-                                        title: "Not Found", 
-                                        message: err.message, 
-                                        stackTrace: err.stack
-                                });
-        
-                default:
-                        break;
-        }
-        
+  const statusCode = res.statusCode ? res.statusCode : 500;
+  switch (key) {
+    case constant.VALIDATION_ERROR:
+      res.json({
+        title: "Validation Failed",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+      break;
+    case constant.UNAUTHORIZED:
+      res.json({
+        title: "Unauthorized",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+      break;
+    case constant.FORBIDDEN:
+      res.json({
+        title: "Forbidden",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+      break;
+    case constant.NOT_FOUND:
+      res.json({
+        title: "Not Found",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+     case constant.SERVER_ERROR:
+        res.json({
+          title: "Server Error",
+          message: err.message,
+          stackTrace: err.stack,
+        });
+       break;
+    default:
+        console.log("No Error, All good !");
+      break;
+  }
 };
 
 module.exports = errorHandling;
