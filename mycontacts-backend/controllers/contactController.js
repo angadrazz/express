@@ -31,8 +31,13 @@ const createContact = expressAsyncHandler(async (req, res) => {
 //router get all contacts
 //@access public
 
-const getContact = expressAsyncHandler((req, res) => {
-  res.status(200).json({ message: `get contact for ${req.params.id}` });
+const getContact = expressAsyncHandler(async(req, res) => {
+  const contact = await contactModel.findById(req.params.id);
+  if (!contact) {
+    res.status(404);
+    throw new Error("Contact Not Found");
+  }
+  res.status(200).json(contact);
 });
 
 //@desc update all contact
